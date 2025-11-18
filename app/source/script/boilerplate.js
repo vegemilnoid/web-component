@@ -38,6 +38,8 @@ customElements.define(`${APP_GLOBAL_CONFIG.ID}-boilerplate`,
      */
     attributeChangedCallback(name, oldValue, newValue) {
       try {
+        this.dispatchEvent(new CustomEvent('attributeChanged'));
+
         this.bindAttribute(name, newValue);
 
         if(this.innerHTML.length > 0) {
@@ -57,6 +59,8 @@ customElements.define(`${APP_GLOBAL_CONFIG.ID}-boilerplate`,
      */
     async connectedCallback() {
       try {
+        this.dispatchEvent(new CustomEvent('connected'));
+
         this.render();
       }
       catch(error) {
@@ -70,6 +74,8 @@ customElements.define(`${APP_GLOBAL_CONFIG.ID}-boilerplate`,
     disconnectedCallback() {
       try {
         this.innerHTML = '';
+
+        this.dispatchEvent(new CustomEvent('disconnected'));
       }
       catch(error) {
         this.error(error);
