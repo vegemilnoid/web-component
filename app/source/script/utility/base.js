@@ -19,13 +19,39 @@ APP_GLOBAL_FUNCTION[`${APP_GLOBAL_CONFIG.ID.toLowerCase()}Base`] = {
      *
      * @type {*}
      */
-    self.attribute = {};
+    self.attribute = new Proxy({}, {
+      get: (target, property) => {
+        return Reflect.get(target, property);
+      },
+      set: (target, property, value) => {
+        target[property] = value;
+
+        if(self.innerHTML.length > 0) {
+          self.render();
+        }
+
+        return true;
+      }
+    });
 
     /**
      * Represents a reference to a property on the current instance (self).
      * Commonly used for indicating or accessing the instance's own properties.
      */
-    self.property = {};
+    self.property = new Proxy({}, {
+      get: (target, property) => {
+        return Reflect.get(target, property);
+      },
+      set: (target, property, value) => {
+        target[property] = value;
+
+        if(self.innerHTML.length > 0) {
+          self.render();
+        }
+
+        return true;
+      }
+    });
 
     /**
      * A logging utility typically used to output debug, informational,
