@@ -24,9 +24,7 @@ APP_GLOBAL_FUNCTION[`${APP_GLOBAL_CONFIG.ID.toLowerCase()}Base`] = {
       set: (target, property, value) => {
         target[property] = value;
 
-        if(self.innerHTML.length > 0) {
-          self.render();
-        }
+        self.render();
 
         return true;
       }
@@ -45,9 +43,7 @@ APP_GLOBAL_FUNCTION[`${APP_GLOBAL_CONFIG.ID.toLowerCase()}Base`] = {
       set: (target, property, value) => {
         target[property] = value;
 
-        if(self.innerHTML.length > 0) {
-          self.render();
-        }
+        self.render();
 
         return true;
       }
