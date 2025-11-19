@@ -24,7 +24,9 @@ APP_GLOBAL_FUNCTION[`${APP_GLOBAL_CONFIG.ID.toLowerCase()}Base`] = {
       set: (target, property, value) => {
         target[property] = value;
 
-        self.querySelector(`[${APP_GLOBAL_CONFIG.ID}-bind="${property}"]`).innerText = value;
+        if(_.isString(value)) {
+          self.querySelector(`[${APP_GLOBAL_CONFIG.ID}-bind="${property}"]`).innerText = value;
+        }
 
         return true;
       }
@@ -43,7 +45,9 @@ APP_GLOBAL_FUNCTION[`${APP_GLOBAL_CONFIG.ID.toLowerCase()}Base`] = {
       set: (target, property, value) => {
         target[property] = value;
 
-        self.querySelector(`[${APP_GLOBAL_CONFIG.ID}-bind="${property}"]`).innerText = value;
+        if(_.isString(value)) {
+          self.querySelector(`[${APP_GLOBAL_CONFIG.ID}-bind="${property}"]`).innerText = value;
+        }
 
         return true;
       }
