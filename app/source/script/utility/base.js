@@ -24,7 +24,7 @@ APP_GLOBAL_FUNCTION[`${APP_GLOBAL_CONFIG.ID.toLowerCase()}Base`] = {
       set: (target, property, value) => {
         target[property] = value;
 
-        self.render();
+        self.querySelector(`[data-bind="${property}"]`).innerText = value;
 
         return true;
       }
@@ -43,7 +43,7 @@ APP_GLOBAL_FUNCTION[`${APP_GLOBAL_CONFIG.ID.toLowerCase()}Base`] = {
       set: (target, property, value) => {
         target[property] = value;
 
-        self.render();
+        self.querySelector(`[data-bind="${property}"]`).innerText = value;
 
         return true;
       }
