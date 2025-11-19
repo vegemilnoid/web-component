@@ -14,10 +14,8 @@ APP_GLOBAL_FUNCTION[`${APP_GLOBAL_CONFIG.ID.toLowerCase()}Base`] = {
     self.uuid = `${APP_GLOBAL_CONFIG.ID}-${crypto.randomUUID()}`;
 
     /**
-     * Represents an attribute associated with the current object instance.
-     * Typically used to store or retrieve information related to the object.
-     *
-     * @type {*}
+     * Represents an attribute belonging to the current instance of the object.
+     * This property is used to store or access specific data associated with the instance.
      */
     self.attribute = new Proxy({}, {
       get: (target, property) => {
@@ -35,8 +33,10 @@ APP_GLOBAL_FUNCTION[`${APP_GLOBAL_CONFIG.ID.toLowerCase()}Base`] = {
     });
 
     /**
-     * Represents a reference to a property on the current instance (self).
-     * Commonly used for indicating or accessing the instance's own properties.
+     * Represents a property of the object instance.
+     * Used to store and manage data within the object scope.
+     *
+     * @type {*}
      */
     self.property = new Proxy({}, {
       get: (target, property) => {
