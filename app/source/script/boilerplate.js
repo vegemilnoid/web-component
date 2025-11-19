@@ -17,6 +17,8 @@ customElements.define(`${APP_GLOBAL_CONFIG.ID}-boilerplate`,
       const { wcBase } = APP_GLOBAL_FUNCTION;
 
       wcBase.import(this);
+
+      this.render();
     }
 
     /**
@@ -38,13 +40,9 @@ customElements.define(`${APP_GLOBAL_CONFIG.ID}-boilerplate`,
      */
     attributeChangedCallback(name, oldValue, newValue) {
       try {
-        this.dispatchEvent(new CustomEvent('attributeChanged'));
-
         this.bindAttribute(name, newValue);
 
-        if(this.innerHTML.length > 0) {
-          this.render();
-        }
+        this.dispatchEvent(new CustomEvent('attributeChanged'));
       }
       catch(error) {
         this.error(error);
@@ -60,8 +58,6 @@ customElements.define(`${APP_GLOBAL_CONFIG.ID}-boilerplate`,
     async connectedCallback() {
       try {
         this.dispatchEvent(new CustomEvent('connected'));
-
-        this.render();
       }
       catch(error) {
         this.error(error);
