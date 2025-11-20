@@ -141,7 +141,7 @@ export const serve = () => {
 export const run = gulp.series(build, serve, watch);
 
 export const deployDevelopment = done => {
-  const bucket = 'dev.static.cloud.sbs.co.kr';
+  const bucket = '';
 
   new Confirm(`Do you want deploy \'${name} ${version}\' to \'${bucket}\'?`).ask(async confirmed => {
     if(!confirmed) {
@@ -185,7 +185,7 @@ export const deployDevelopment = done => {
 };
 
 export const deployProduction = done => {
-  const bucket = 'static.cloud.sbs.co.kr';
+  const bucket = '';
 
   new Confirm(`Do you want deploy \'${name} ${version}\' to \'${bucket}\'?`).ask(async confirmed => {
     if(!confirmed) {
@@ -224,51 +224,6 @@ export const deployProduction = done => {
 
     singleBar.stop();
 
-    done();
-  });
-};
-
-export const deployPublish = done => {
-  const bucket = "sbs-pub-test";
-  
-  new Confirm(`Do you want deploy \'${name} ${version}\' to \'${bucket}\'?`).ask(async confirmed => {
-    if(!confirmed) {
-      done();
-      
-      return;
-    }
-    
-    const targets = glob.sync(`${distribution}/**/*`);
-    const singleBar = new cliProgress.SingleBar({ format: '{bar} | {value}/{total} | ETA: {eta}s | {key}' }, cliProgress.Presets.shades_classic);
-    
-    singleBar.start(targets.length, 0);
-    
-    const s3 = new S3Client({
-      region: 'ap-northeast-2',
-      credentials: fromIni({ profile: 'dev' }),
-    });
-    
-    for(const target of targets) {
-      if(fs.lstatSync(target).isFile()) {
-        const key = target.replace(/\\/g, '/').replace(`${distribution}/`, '');
-        // const key = target.replace(/\\/g, '/').replace(`${distribution}/`, '');
-        
-        const sent = await s3.send(new PutObjectCommand({
-          ACL: 'public-read',
-          Bucket: bucket,
-          Key:  `program-component-pc/${key}`,
-          Body: fs.readFileSync(target),
-          ContentType: mime.lookup(target),
-        }));
-        
-        // console.log(sent);
-        
-        singleBar.update(targets.indexOf(target) + 1, { key: key });
-      }
-    }
-    
-    singleBar.stop();
-    
     done();
   });
 };
