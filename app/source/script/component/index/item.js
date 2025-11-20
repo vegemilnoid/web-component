@@ -94,7 +94,7 @@ customElements.define(`${APP_GLOBAL_CONFIG.ID}-index-item`,
      * HTML 렌더링
      * @fires rendered
      */
-    render() {
+    render = () => {
       try {
         this.innerHTML = `<div>${this.uuid}</div>`;
 

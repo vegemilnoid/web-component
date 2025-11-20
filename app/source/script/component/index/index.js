@@ -102,7 +102,7 @@ customElements.define(`${APP_GLOBAL_CONFIG.ID}-index`,
      * HTML 렌더링
      * @fires rendered
      */
-    render() {
+    render = () => {
       try {
         this.debug('render');
 
