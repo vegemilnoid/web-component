@@ -104,8 +104,6 @@ customElements.define(`${APP_GLOBAL_CONFIG.ID}-index`,
      */
     render = () => {
       try {
-        this.debug('render');
-
         const { subject, object } = this.attribute;
         const { title, description, items } = this.property;
 
