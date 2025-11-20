@@ -17,8 +17,6 @@ customElements.define(`${APP_GLOBAL_CONFIG.ID}-footer`,
       const { wcBase } = APP_GLOBAL_FUNCTION;
 
       wcBase.import(this);
-
-      this.render();
     }
 
     /**
@@ -57,6 +55,8 @@ customElements.define(`${APP_GLOBAL_CONFIG.ID}-footer`,
      */
     async connectedCallback() {
       try {
+        this.render();
+
         this.dispatchEvent(new CustomEvent('connected'));
       }
       catch(error) {
@@ -91,8 +91,9 @@ customElements.define(`${APP_GLOBAL_CONFIG.ID}-footer`,
     }
 
     /**
-     * HTML 렌더링
-     * @fires rendered
+     * Renders the HTML content for the component based on its attributes and properties.
+     * The method dynamically constructs the HTML structure using values from `attribute` and `property` objects,
+     * and assigns it to the component's `innerHTML`.
      */
     render() {
       try {

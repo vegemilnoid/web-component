@@ -99,8 +99,9 @@ customElements.define(`${APP_GLOBAL_CONFIG.ID}-index`,
     }
 
     /**
-     * HTML 렌더링
-     * @fires rendered
+     * Renders the HTML content for the component based on its attributes and properties.
+     * The method dynamically constructs the HTML structure using values from `attribute` and `property` objects,
+     * and assigns it to the component's `innerHTML`.
      */
     render = () => {
       try {
