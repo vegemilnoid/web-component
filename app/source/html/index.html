@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+  <script src="/script/app.js"></script>
+</head>
+<body>
+  <header>
+    <wc-header></wc-header>
+  </header>
+  <main>
+    <wc-index subject="나" object="오빠"></wc-index>
+  </main>
+  <footer>
+    <wc-footer></wc-footer>
+  </footer>
+  <script>
+    const $target = document.querySelector('wc-index');
+
+    $target.addEventListener('connected', () => {
+      console.log('connected');
+    });
+
+    $target.addEventListener('attributeChanged', () => {
+      console.log('attributeChanged');
+    });
+
+    $target.addEventListener('rendered', () => {
+      console.log('rendered');
+    });
+  </script>
+</body>
+</html>

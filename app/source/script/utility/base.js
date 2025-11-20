@@ -24,9 +24,7 @@ APP_GLOBAL_FUNCTION[`${APP_GLOBAL_CONFIG.ID.toLowerCase()}Base`] = {
       set: (target, property, value) => {
         target[property] = value;
 
-        if(_.isString(value)) {
-          self.querySelector(`[${APP_GLOBAL_CONFIG.ID}-bind="${property}"]`).innerText = value;
-        }
+        self.render();
 
         return true;
       }
@@ -45,9 +43,7 @@ APP_GLOBAL_FUNCTION[`${APP_GLOBAL_CONFIG.ID.toLowerCase()}Base`] = {
       set: (target, property, value) => {
         target[property] = value;
 
-        if(_.isString(value)) {
-          self.querySelector(`[${APP_GLOBAL_CONFIG.ID}-bind="${property}"]`).innerText = value;
-        }
+        self.render();
 
         return true;
       }
@@ -209,10 +205,6 @@ APP_GLOBAL_FUNCTION[`${APP_GLOBAL_CONFIG.ID.toLowerCase()}Base`] = {
       else {
         return `${attribute}="${_.escape(value).replace(/(\r\n|\n|\r)/g, '<br>')}"`;
       }
-    };
-
-    self.toDirective = value => {
-      return `${APP_GLOBAL_CONFIG.ID}-bind="${value}"`;
     };
 
     /**
