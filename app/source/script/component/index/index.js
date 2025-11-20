@@ -116,7 +116,11 @@ customElements.define(`${APP_GLOBAL_CONFIG.ID}-index`,
             <span>${object}</span>가 좋은 걸 어떡해
           </p>
           <p>${description}</p>
-          <ul></ul>
+          <ul>
+            ${items.map(item => {
+              return `<li>${item.title}</li>`;  
+            }).join('')}
+          </ul>
         </div>`;
 
         this.dispatchEvent(new CustomEvent('rendered'));
