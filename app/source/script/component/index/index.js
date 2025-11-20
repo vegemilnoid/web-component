@@ -115,9 +115,7 @@ customElements.define(`${APP_GLOBAL_CONFIG.ID}-index`,
           </p>
           <p>${description}</p>
           <ul>
-            ${items.map(item => {
-              return `<li>${item.title}</li>`;  
-            }).join('')}
+            ${items.map(item => `<li>${item.title}</li>`).join('')}
           </ul>
         </div>`;
 
