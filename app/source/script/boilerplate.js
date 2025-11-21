@@ -104,6 +104,6 @@ customElements.define(`${APP_GLOBAL_CONFIG.ID}-boilerplate`,
       catch(error) {
         this.error(error);
       }
-    }
+    };
   }
 );

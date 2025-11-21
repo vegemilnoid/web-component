@@ -125,6 +125,6 @@ customElements.define(`${APP_GLOBAL_CONFIG.ID}-index`,
       catch(error) {
         this.error(error);
       }
-    }
+    };
   }
 );
