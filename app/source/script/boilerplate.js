@@ -105,5 +105,29 @@ customElements.define(`${APP_GLOBAL_CONFIG.ID}-boilerplate`,
         this.error(error);
       }
     };
+
+    /**
+     * Updates the inner HTML content of a specified target element.
+     *
+     * This function retrieves a target element using the provided key
+     * and updates its inner HTML with the given value. If the target
+     * element is not found, the function terminates silently. Catches
+     * and handles any errors that occur during the process.
+     *
+     * @param {string} key - Identifier used to locate the target element.
+     * @param {string} value - The new HTML content to set in the target element.
+     */
+    renderTarget = (key, value) => {
+      try {
+        const $target = this.getTarget(key);
+
+        if(!$target) return;
+
+        $target.innerHTML = value;
+      }
+      catch(error) {
+        this.error(error);
+      }
+    };
   }
 );
