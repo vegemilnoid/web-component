@@ -278,6 +278,19 @@ APP_GLOBAL_FUNCTION[`${APP_GLOBAL_CONFIG.ID.toLowerCase()}Base`] = {
     };
 
     /**
+     * Retrieves the target element or object associated with the current instance.
+     *
+     * This method is typically used to obtain a specific target element or object
+     * linked to the context of the current instance. The exact implementation
+     * and behavior may vary depending on the specific use and instance configuration.
+     *
+     * @returns {Object|Element|null} The target element or object, or null if no target is set.
+     */
+    self.getTarget = key => {
+      return self.querySelector(`#${self.uuid}-${key}`);
+    };
+
+    /**
      * Retrieves the body content of the current instance.
      *
      * @function
@@ -285,7 +298,7 @@ APP_GLOBAL_FUNCTION[`${APP_GLOBAL_CONFIG.ID.toLowerCase()}Base`] = {
      */
     self.getBody = () => {
       return document.querySelector('body');
-    }
+    };
 
     return self;
   }
