@@ -24,7 +24,11 @@ APP_GLOBAL_FUNCTION[`${APP_GLOBAL_CONFIG.ID.toLowerCase()}Base`] = {
       set: (target, property, value) => {
         target[property] = value;
 
-        self.render();
+        if(!_.isFunction(self.renderTarget)) {
+          return true;
+        }
+
+        self.renderTarget(property, value);
 
         return true;
       }
@@ -43,7 +47,11 @@ APP_GLOBAL_FUNCTION[`${APP_GLOBAL_CONFIG.ID.toLowerCase()}Base`] = {
       set: (target, property, value) => {
         target[property] = value;
 
-        self.render();
+        if(!_.isFunction(self.renderTarget)) {
+          return true;
+        }
+
+        self.renderTarget(property, value);
 
         return true;
       }
@@ -182,10 +190,6 @@ APP_GLOBAL_FUNCTION[`${APP_GLOBAL_CONFIG.ID.toLowerCase()}Base`] = {
      * @returns {string} The string representation of the input value, suitable for attribute assignment.
      */
     self.toAttribute = (attribute, value) => {
-      if(value === null || value === undefined) {
-        return '';
-      }
-
       if(_.isBoolean(value)) {
         if(value) {
           return attribute;
@@ -195,7 +199,7 @@ APP_GLOBAL_FUNCTION[`${APP_GLOBAL_CONFIG.ID.toLowerCase()}Base`] = {
         }
       }
 
-      if(value.length === 0) {
+      if(!_.isString(key) || key.length === 0) {
         return '';
       }
 
@@ -205,6 +209,14 @@ APP_GLOBAL_FUNCTION[`${APP_GLOBAL_CONFIG.ID.toLowerCase()}Base`] = {
       else {
         return `${attribute}="${_.escape(value).replace(/(\r\n|\n|\r)/g, '<br>')}"`;
       }
+    };
+
+    self.toAttributeId = key => {
+      if(!_.isString(key) || key.length === 0) {
+        return '';
+      }
+
+      return `id="${self.uuid}-${key}"`;
     };
 
     /**
