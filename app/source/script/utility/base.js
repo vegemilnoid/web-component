@@ -211,6 +211,17 @@ APP_GLOBAL_FUNCTION[`${APP_GLOBAL_CONFIG.ID.toLowerCase()}Base`] = {
       }
     };
 
+    /**
+     * Converts a given input into an attribute ID.
+     *
+     * This function is typically used to transform an input, such as a string or other data,
+     * to match the format or requirements of an attribute identifier.
+     *
+     * @method toAttributeId
+     * @memberof self
+     * @param {*} input - The input value to be converted into an attribute ID.
+     * @returns {string} The converted attribute ID as a string.
+     */
     self.toAttributeId = key => {
       if(!_.isString(key) || key.length === 0) {
         return '';
