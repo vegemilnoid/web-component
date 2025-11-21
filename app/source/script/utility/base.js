@@ -300,6 +300,22 @@ APP_GLOBAL_FUNCTION[`${APP_GLOBAL_CONFIG.ID.toLowerCase()}Base`] = {
       return document.querySelector('body');
     };
 
+    /**
+     * Retrieves the model associated with the current instance.
+     *
+     * @returns {Object} The model data or object relevant to the current context.
+     */
+    self.getModel = () => {
+      const attribute = Object.assign({}, self.attribute);
+      const property = Object.assign({}, self.property);
+
+      return {
+        attribute: attribute,
+        property: property,
+        model: _.extend(property, attribute)
+      };
+    };
+
     return self;
   }
 };
