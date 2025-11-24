@@ -115,7 +115,7 @@ customElements.define(`${APP_GLOBAL_CONFIG.ID}-index`,
             <span>${object}</span>가 좋은 걸 어떡해
           </p>
           <p ${this.toAttributeId('description')}>${description}</p>
-          <ul>
+          <ul ${this.toAttributeId('items')}>
             ${items.map(item => `<li>${item.title}</li>`).join('')}
           </ul>
         </div>`;
@@ -145,6 +145,8 @@ customElements.define(`${APP_GLOBAL_CONFIG.ID}-index`,
         if(!$target) return;
 
         $target.innerHTML = value;
+
+        this.dispatchEvent(new CustomEvent('target-rendered'));
       }
       catch(error) {
         this.error(error);
