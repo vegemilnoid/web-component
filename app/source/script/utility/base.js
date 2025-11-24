@@ -9,9 +9,35 @@ APP_GLOBAL_FUNCTION[`${APP_GLOBAL_CONFIG.ID.toLowerCase()}Base`] = {
   import: self => {
     /**
      * A property that typically stores a universally unique identifier (UUID) for the instance.
-     * This is often used to uniquely identify specific objects, ensuring no collisions occur even across distributed systems.
+     * This is often used to uniquely identify specific objects, ensuring no collisions occur even across distributed
+     * systems.
      */
     self.uuid = `${APP_GLOBAL_CONFIG.ID}-${crypto.randomUUID()}`;
+
+    self.createDeepProxy = (target, callback) => {
+      const handler = {
+        get(target, property, receiver) {
+          const value = Reflect.get(target, property, receiver);
+
+          if(_.isObject(value)) {
+            return createDeepProxy(value, callback); // 재귀적 Proxy 생성
+          }
+
+          return value;
+        },
+        set(target, property, value, receiver) {
+          const oldValue = Reflect.get(target, property);
+          const reflected = Reflect.set(target, property, value, receiver);
+
+          if(reflected && oldValue !== value) {
+            callback(property, value, oldValue);
+          }
+          return reflected;
+        }
+      };
+      
+      return new Proxy(target, handler);
+    };
 
     /**
      * Represents an attribute belonging to the current instance of the object.
@@ -35,27 +61,64 @@ APP_GLOBAL_FUNCTION[`${APP_GLOBAL_CONFIG.ID.toLowerCase()}Base`] = {
     });
 
     /**
-     * Represents a property of the object instance.
-     * Used to store and manage data within the object scope.
+     * Represents a property of the current object instance.
+     * This is typically used to store or access a specific piece of data
+     * or configuration related to the object.
      *
-     * @type {*}
+     * @type {any}
      */
-    self.property = new Proxy({}, {
-      get: (target, property) => {
-        return Reflect.get(target, property);
-      },
-      set: (target, property, value) => {
-        target[property] = value;
+    self.property = (() => {
+      /**
+       * Creates a deep proxy for a target object, allowing you to intercept `get` and `set` operations recursively.
+       *
+       * The `get` handler wraps nested objects with the same deep proxy to enable recursive monitoring.
+       * The `set` handler triggers a callback whenever a property on the target object is modified.
+       *
+       * @param {Object} target - The target object to be proxied.
+       * @param {Function} callback - A function to be called whenever a property is modified.
+       * The callback is invoked with the following arguments:
+       * 1. The target object where the property is modified.
+       * 2. The property being modified.
+       * 3. The new value being set.
+       * 4. The old value before the modification.
+       *
+       * @returns {Proxy} A new Proxy object wrapping the target object with the specified handlers.
+       */
+      const createDeepProxy = (target, callback) => {
+        const handler = {
+          get(target, property, receiver) {
+            const value = Reflect.get(target, property, receiver);
 
-        if(!_.isFunction(self.renderTarget)) {
-          return true;
+            if(Object.keys(target).includes(property) && _.isObject(value)) {
+              return createDeepProxy(value, callback);
+            }
+
+            return value;
+          },
+          set(target, property, value, receiver) {
+            const oldValue = Reflect.get(target, property);
+            const reflected = Reflect.set(target, property, value, receiver);
+
+            if(reflected && oldValue !== value) {
+              callback(target, property, value, oldValue);
+            }
+
+            return reflected;
+          }
+        };
+
+        return new Proxy(target, handler);
+      };
+
+      return createDeepProxy({}, (target, property, value) => {
+        if(_.isArray(target) || property === 'items') {
+          self.renderItemsTarget(property, value);
         }
-
-        self.renderTarget(property, value);
-
-        return true;
-      }
-    });
+        else {
+          self.renderTarget(property, value);
+        }
+      });
+    })();
 
     /**
      * A logging utility typically used to output debug, informational,
