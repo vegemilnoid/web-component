@@ -50,11 +50,9 @@ APP_GLOBAL_FUNCTION[`${APP_GLOBAL_CONFIG.ID.toLowerCase()}Base`] = {
       set: (target, property, value) => {
         target[property] = value;
 
-        if(!_.isFunction(self.renderTarget)) {
-          return true;
+        if(_.isFunction(self.renderTarget)) {
+          self.renderTarget(property, value);
         }
-
-        self.renderTarget(property, value);
 
         return true;
       }
