@@ -379,6 +379,32 @@ APP_GLOBAL_FUNCTION[`${APP_GLOBAL_CONFIG.ID.toLowerCase()}Base`] = {
       };
     };
 
+    /**
+     * Updates the inner HTML content of a specified target element.
+     *
+     * This function retrieves a target element using the provided key
+     * and updates its inner HTML with the given value. If the target
+     * element is not found, the function terminates silently. Catches
+     * and handles any errors that occur during the process.
+     *
+     * @param {string} key - Identifier used to locate the target element.
+     * @param {string} value - The new HTML content to set in the target element.
+     */
+    self.renderTarget = (key, value) => {
+      try {
+        const $target = self.getTarget(key);
+
+        if(!$target) return;
+
+        $target.innerHTML = value;
+
+        self.dispatchEvent(new CustomEvent('target-rendered'));
+      }
+      catch(error) {
+        self.error(error);
+      }
+    };
+
     return self;
   }
 };
