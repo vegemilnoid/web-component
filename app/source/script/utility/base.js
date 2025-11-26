@@ -87,7 +87,7 @@ APP_GLOBAL_FUNCTION[`${APP_GLOBAL_CONFIG.ID.toLowerCase()}Base`] = {
           get(target, property, receiver) {
             const value = Reflect.get(target, property, receiver);
 
-            if(Object.keys(target).includes(property) && _.isObject(value)) {
+            if(!_.isArray(target) && Object.keys(target).includes(property) && _.isObject(value)) {
               return createDeepProxy(value, callback);
             }
 
