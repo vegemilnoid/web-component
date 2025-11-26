@@ -17,8 +17,6 @@ customElements.define(`${APP_GLOBAL_CONFIG.ID}-boilerplate`,
       const { wcBase } = APP_GLOBAL_FUNCTION;
 
       wcBase.import(this);
-
-      this.render();
     }
 
     /**
@@ -57,6 +55,8 @@ customElements.define(`${APP_GLOBAL_CONFIG.ID}-boilerplate`,
      */
     async connectedCallback() {
       try {
+        this.render();
+
         this.dispatchEvent(new CustomEvent('connected'));
       }
       catch(error) {
